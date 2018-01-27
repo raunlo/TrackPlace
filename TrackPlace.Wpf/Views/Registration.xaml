@@ -1,0 +1,64 @@
+﻿<Window x:Class="TrackPlace.WPF.Views.Registration"
+        x:Name="WindowsForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:TrackPlace.WPF.ViewModels"
+        mc:Ignorable="d"
+        Height="400" Width="525">
+    <Window.Resources>
+        <viewModels:RegistrationVM x:Key="vm"></viewModels:RegistrationVM>
+    </Window.Resources>
+    <Grid Height="500" Width="525" Background="#f5f5f5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.12*"/>
+            <RowDefinition Height="0.95*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Background="#ff6600">
+            <TextBlock Height="23" HorizontalAlignment="Left" Margin="10,10,0,0" Name="RegistrationHeading"
+         Text="Kasutajaks registreerumine" FontWeight="Normal" FontFamily="BebasNeueRegular" FontSize="20" Foreground="Black"
+           FontStretch="ExtraCondensed" VerticalAlignment="Top"/>
+        </Border>
+        <StackPanel Name="stackregister" Grid.Row="1">
+            <TextBlock Height="30" HorizontalAlignment="Left" Margin="11,16,0,0" Name="TextBlockHeading"
+         VerticalAlignment="Top" FontSize="12" FontStyle="Italic" Padding="1">
+            Kasutajakonto loomiseks, palun täida alljärgneva ankeedi kõik väljad.
+            </TextBlock>
+            <TextBlock Height="23" HorizontalAlignment="Left" Margin="90,0,0,6" Name="TextblockFN" Text="Eesnimi/Firma nimi " VerticalAlignment="Top"
+         Width="114" >
+            </TextBlock>
+            <TextBox Text="{Binding Path=UserAccont.Person.FirstName, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource, Source={StaticResource vm}, BindsDirectlyToSource=True}" Height="23" HorizontalAlignment="Left" Margin="197,-26,0,6" Name="textboxFirstName"
+             VerticalAlignment="Top" Width="200"/>
+            <TextBlock Height="23" HorizontalAlignment="Left" Margin="104,0,0,6" Name="textblockLN"
+            Text="Perenimi/Reg. nr" VerticalAlignment="Top" Width="95">
+            </TextBlock>
+            <TextBox Text="{Binding Path=UserAccont.Person.LastName, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource, Source={StaticResource vm}}" Height="23" HorizontalAlignment="Left" Margin="197,-26,0,6" Name="textboxLastName"
+         VerticalAlignment="Top" Width="200">
+            </TextBox>
+            <TextBlock Height="23" HorizontalAlignment="Left" Margin="120,0,0,6" Name="textblockEmail"
+               Text="Email aadress" VerticalAlignment="Top" Width="90">
+            </TextBlock>
+            <TextBox Text="{Binding Path=UserAccont.Person.EMailAddress, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource, Source={StaticResource vm}}" Height="23" HorizontalAlignment="Left" Margin="197,-26,0,6" Name="textboxEmail"
+             VerticalAlignment="Top" Width="200">
+            </TextBox>
+            <TextBlock Height="23" HorizontalAlignment="Left" Margin="145,0,0,6" Name="textblockPassword"
+             Text="Salasõna" VerticalAlignment="Top" Width="49" >
+            </TextBlock>
+            <TextBox Text="{Binding Path=UserAccont.Password.PasswordName, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource, Source={StaticResource vm}}" Height="23" HorizontalAlignment="Left" Margin="197,-26,0,6" Name="textboxPassword"
+             VerticalAlignment="Top" Width="200" >
+            </TextBox>
+            <TextBlock Height="23" HorizontalAlignment="Left" Margin="111,0,0,6" Name="textblockReenterPassword"
+             Text="Salasõna uuesti" VerticalAlignment="Top" Width="82"></TextBlock>
+            <TextBox Text="{Binding Password, Source={StaticResource vm}}" Height="23" HorizontalAlignment="Left" Margin="197,-26,0,6" Name="textboxReenterPassword"
+         VerticalAlignment="Top" Width="200">
+            </TextBox>
+            <Button Command="{Binding RegisterCommand, Source={StaticResource vm}}" CommandParameter="{Binding ElementName=WindowsForm}"  Content="REGISTREERU" FontSize="9" Margin="198, 13,0,0" Height="23" HorizontalAlignment="Left"
+             x:Name="Register_btn" Background="#ff6600" Foreground="White" FontWeight="Bold" VerticalAlignment="Top"
+             Width="70"></Button>
+            <TextBlock x:Name="errorMessage1" Text="{Binding Path=ErrorText, NotifyOnTargetUpdated=
+                true, Mode=TwoWay, Source={StaticResource vm}}"   OpacityMask="Crimson" Foreground="#FFE5572C" Height="23" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="200, 13, 0, 0"></TextBlock>
+        </StackPanel>
+
+    </Grid>
+</Window>

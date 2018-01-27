@@ -1,0 +1,80 @@
+﻿<UserControl x:Class="TrackPlace.WPF.Views.AddOrder"
+        x:Name="Order"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ViewModels="clr-namespace:TrackPlace.WPF.ViewModels"
+        xmlns:models="clr-namespace:TrackPlace.Models;assembly=TrackPlace"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
+        
+        xmlns:controls="clr-namespace:TrackPlace.WPF.Controls"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        d:DesignHeight="650" d:DesignWidth="650">
+    <UserControl.Resources>
+        <ObjectDataProvider x:Key="TypeOfTrucks" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="models:TypeOfTrucks" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <ViewModels:AddOrderVM />
+    </UserControl.DataContext>
+    <Grid>
+        <StackPanel>
+            <TextBlock Text="Tellimuse lisamine" TextAlignment="Center" FontSize="20" Height="43" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition Width="5*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <TextBlock Text="Maha laadimise maakond" Margin="0, 6, 0,4" />
+                    <TextBlock Text="Maha laadimise linn" Margin="0,8" />
+                    <TextBlock Text="Maha laadimise aadress" Margin="0, 5, 0, 4" />
+                    <TextBlock Text="Maha laadimise maja number" Margin="0,8,7,7" />
+                    <TextBlock Text="Peale laadimise maakond" Margin="0, 4,0,5" />
+                    <TextBlock Text="Peale laadimise linn" Margin="0,7,0,7" />
+                    <TextBlock Text="Peale laadimise aadress" Margin="0,5,0,5" />
+                    <TextBlock Text="Peale laadimise maja number" Margin="0,7,0,7" />
+                    <TextBlock Text="Peale laadimise kuupäev" Margin="0,7,0,7" />
+                    <TextBlock Text="Toote nimetus" Margin="0,6,0,7" />
+                    <TextBlock Text="Toote laius" Margin="0,4,0,7" />
+                    <TextBlock Text="Toote kõrgus" Margin="0,5,0,8" />
+                    <TextBlock Text="Toote pikkus" Margin="0,4,0,4" />
+                    <TextBlock Text="Toote ruumala" Margin="0,8,0,6"></TextBlock>
+                    <TextBlock Text="Toote kaal" Margin="0,6,0,4" />
+                    <TextBlock Text="Soovitud veok" Margin="0,10,0,4" />
+                    <TextBlock Text="Kommentaar" Margin="0,50,0,10" />
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="5,0,-5,0">
+                    <TextBox Margin="5"
+                                 Text="{Binding Path=Order.UnloadingCounty,  Mode=OneWayToSource, BindsDirectlyToSource=True}" />
+                    <TextBox Margin="5" Text="{Binding Path=Order.UnloadingCity, Mode=OneWayToSource}" />
+                    <TextBox Margin="5" Text="{Binding Path=Order.UnloadingAddress, Mode=OneWayToSource}" />
+                    <TextBox Margin="5" Text="{Binding Path=Order.UnloadingHouseNumber}"/>
+                    <TextBox Margin="5" Text="{Binding Path=Order.LoadingCounty,  Mode=OneWayToSource}" />
+                    <TextBox Margin="5" Text="{Binding Path=Order.LoadingCity,  Mode=OneWayToSource}" />
+                    <TextBox Margin="5" Text="{Binding Path=Order.LoadingAddress,  Mode=OneWayToSource}" />
+                    <TextBox Margin="5" Text="{Binding Path=Order.LoadingHouseNumber}"/>
+                    <xctk:DateTimePicker Value="{Binding Path=Order.LoadingDateTime}" Margin="5" DisplayDefaultValueOnEmptyText="True"/>
+                    <TextBox Margin="5" Text="{Binding Path=Order.ProductName,  Mode=OneWayToSource}" />
+                    <TextBox Margin="5" Text="{Binding Path=Order.ProductWidth}" />
+                    <TextBox Margin="5" Text="{Binding Path=Order.ProductHeight}" />
+                    <TextBox Margin="5" Text="{Binding Path=Order.ProductLength}" />
+                    <TextBox Margin="5" Text="{Binding Path=Order.ProductCubage}"></TextBox>
+                    <TextBox Margin="5" Text="{Binding Path=Order.ProductWeight}" />
+                    <ComboBox Margin="5" ItemsSource="{Binding Source={StaticResource TypeOfTrucks}}"
+                                  SelectedItem="{Binding Path=TruckInOrder.TypeOfTrucks}" />
+                    <TextBox Height="100" Text="{Binding Order.Comments, Mode=OneWayToSource}" Width="600" Margin="0,0,-175,0" />
+                </StackPanel>
+            </Grid>
+            <Button Command="{Binding Path=SaveOrderCommand}" CommandParameter="{Binding ElementName=Order}"
+                    Margin="10" Width="100" Height="20" Content="Esita Tellimus!" />
+            <TextBlock x:Name="ErrorText" VerticalAlignment="Top" Text="{Binding Path=Errormsg}" TextAlignment="Center" OpacityMask="Crimson" Foreground="#FFE5572C"></TextBlock>
+        </StackPanel>
+    </Grid>
+</UserControl>

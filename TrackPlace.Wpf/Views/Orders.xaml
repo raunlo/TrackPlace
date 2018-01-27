@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="TrackPlace.WPF.Views.Orders"
+        x:Name="OrdersController"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"         
+             xmlns:viewModels="clr-namespace:TrackPlace.WPF.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="650" d:DesignWidth="650">
+    <UserControl.DataContext>
+        <viewModels:OrdersVM></viewModels:OrdersVM>
+    </UserControl.DataContext>
+    <Grid>
+        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="true" CanUserResizeColumns="True " CanUserSortColumns="true" Grid.Row="1" 
+                   x:Name="OrdersGrid" ItemsSource="{Binding Path=Orders}"  SelectedItem="{Binding Path=CurrentOrder}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Tellimuse number" Binding="{Binding Path=OrderId}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Veoki juht" >
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0} {1}">
+                            <Binding Path="Truck.UserAccont.Person.FirstName"></Binding>
+                            <Binding Path="Truck.UserAccont.Person.LastName"></Binding>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Toote nimi" Binding="{Binding Path=Order.ProductName}"/>
+                <DataGridTextColumn Header="Peale laadimise kuupäev" Binding="{Binding Path=Order.LoadingDateTime}"/>
+                <DataGridTextColumn Header="Peale laadimise asukoht">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0}, {1}, {2}, {3}">
+                            <Binding Path="Order.LoadingCounty"></Binding>
+                            <Binding Path="Order.LoadingCity"></Binding>
+                            <Binding Path="Order.LoadingAddress"></Binding>
+                            <Binding Path="Order.LoadingHouseNumber"></Binding>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Maha laadimise kuupäev" Binding="{Binding Path=Order.UnloadingDateTime}"/>
+                <DataGridTextColumn Header="Maha laadimise asukoht"  Width="*">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0}, {1}, {2}, {3}">
+                            <Binding Path="Order.UnloadingCounty"></Binding>
+                            <Binding Path="Order.UnloadingCity"></Binding>
+                            <Binding Path="Order.UnloadingAddress"></Binding>
+                            <Binding Path="Order.UnloadingHouseNumber"></Binding>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Command="{Binding Path=DataContext.ChangeOrderCommand ,RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" CommandParameter="{Binding}" Content="Ava arve" ></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

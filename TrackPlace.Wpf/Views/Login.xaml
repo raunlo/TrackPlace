@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="TrackPlace.WPF.Views.Login"
+             x:Name="This"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:viewModels="clr-namespace:TrackPlace.WPF.ViewModels"
+
+
+             Height="300" Width="520">
+    <UserControl.DataContext >
+        <viewModels:LoginVM></viewModels:LoginVM>
+    </UserControl.DataContext>
+    
+    <Grid>
+        <Border Background="#f5f5f5">
+            <TextBlock Height="35" HorizontalAlignment="Center" Margin="190,25,179,0" Name="LoginHeading"
+                       Text="TrackPlace" FontWeight="ExtraBold" FontFamily="BebasNeueRegular" Foreground="#ff6600"
+                       VerticalAlignment="Top"
+                       FontSize="26" FontStretch="ExtraCondensed" />
+        </Border>
+        <StackPanel Name="stacklogin" Grid.Row="1" />
+        <TextBlock Height="50" HorizontalAlignment="Left" Margin="24,65,0,0" Name="TextBlockHeading"
+                   VerticalAlignment="Top" FontSize="14" FontStyle="Italic" Padding="5">
+            NB! Rakenduse kõikide funktsionaalsuste kasutamiseks, logi sisse. <LineBreak />
+            Kasutajakonto loomiseks, klõpsa nupul <Italic>LOO KONTO</Italic>!
+            <TextBlock />
+        </TextBlock>
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="70,133,0,0" Name="textBlock1" Text="Emaili aadress"
+                   VerticalAlignment="Top" Width="100" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="98,173,0,0" Name="textBlock2"
+                   Text="Salasõna" VerticalAlignment="Top" Width="247" />
+        <TextBox
+            Text="{Binding Path=UserAccont.Person.EMailAddress, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"
+            Height="23" HorizontalAlignment="Left" Margin="150, 135, 0,-3" Name="textboxEmail"
+            VerticalAlignment="Top" Width="215" />
+        <PasswordBox Height="23" HorizontalAlignment="Left" Margin="150,175,0,-3" x:Name="UserPassword"  
+                     VerticalAlignment="Top" Width="215"   />
+        <Button Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=This}" Content="LOGI SISSE" FontSize="9"
+                Height="23" HorizontalAlignment="Left" Background="#ff6600" Foreground="White"
+                FontWeight="Bold" Margin="150, 220,0,0" 
+                VerticalAlignment="Top" Width="77" />
+        <Button Command="{Binding Path=RegisterCommand}" CommandParameter="{Binding ElementName=This}" Content="LOO KONTO" FontSize="9"
+                Margin="250,220,0,0" Height="23" HorizontalAlignment="Left"
+                x:Name="Create_account_btn" Background="#ff6600" Foreground="White" FontWeight="Bold"
+                VerticalAlignment="Top" Width="77" />
+        <TextBlock Height="23" HorizontalAlignment="Left" x:Name="errorMessage" VerticalAlignment="Top" Text="{Binding Path=Errormsg}"
+                   Margin="118, 253,0,0" OpacityMask="Crimson" Foreground="#FFE5572C" />
+    </Grid>
+</UserControl>
